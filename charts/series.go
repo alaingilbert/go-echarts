@@ -47,6 +47,7 @@ type SingleSeries struct {
 	Radius   interface{} `json:"radius,omitempty"`
 
 	// Scatter
+	Symbol     string  `json:"symbol,omitempty"`
 	SymbolSize float32 `json:"symbolSize,omitempty"`
 
 	// Tree
@@ -82,6 +83,7 @@ type SingleSeries struct {
 	Data interface{} `json:"data"`
 
 	// series options
+	*opts.Encode       `json:"encode,omitempty"`
 	*opts.ItemStyle    `json:"itemStyle,omitempty"`
 	*opts.Label        `json:"label,omitempty"`
 	*opts.LabelLine    `json:"labelLine,omitempty"`
@@ -114,6 +116,13 @@ func WithEmphasisOpts(opt opts.Emphasis) SeriesOpts {
 func WithAreaStyleOpts(opt opts.AreaStyle) SeriesOpts {
 	return func(s *SingleSeries) {
 		s.AreaStyle = &opt
+	}
+}
+
+// WithEncodeOpts
+func WithEncodeOpts(opt opts.Encode) SeriesOpts {
+	return func(s *SingleSeries) {
+		s.Encode = &opt
 	}
 }
 
@@ -218,6 +227,8 @@ func WithScatterChartOpts(opt opts.ScatterChart) SeriesOpts {
 	return func(s *SingleSeries) {
 		s.XAxisIndex = opt.XAxisIndex
 		s.YAxisIndex = opt.YAxisIndex
+		s.SymbolSize = opt.SymbolSize
+		s.Symbol = opt.Symbol
 	}
 }
 
